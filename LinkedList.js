@@ -173,6 +173,10 @@ const main = () => {
   SLL.remove('Tauhida');
   //   SLL.display();
   display(SLL);
+  //   console.log('before reversal', display(SLL));
+  //   console.log(reverseList(SLL.head));
+  console.log('third from end is', findThirdFromEnd(SLL));
+  //   console.log('after reversal', display(SLL));
   //   SLL.size();
   //   size();
   //   console.log('Empty list:', SLL.isEmpty());
@@ -187,7 +191,7 @@ const main = () => {
 main();
 
 /* =========================================================
-3. Supplemental functions for a linked list
+3. Supplemental functions for a linked lis
 
 - Implement the following functions that operate on your linked list class. Note
   that these should be free functions instead of methods of the linked list class,
@@ -299,6 +303,16 @@ Your program should reverse the direction of a given singly linked list.
 In other words, all pointers should point backward. 
 BONUS: Solve this problem using both recursive and iterative algorithms.
 =========================================================*/
+function reverseList(head) {
+  //when next node is null (last item in list) return list
+  if (!head || !head.next) {
+    return head;
+  }
+  let tmp = reverseList(head.next);
+  head.next.next = head;
+  head.next = undefined;
+  return tmp;
+}
 
 /* =========================================================
 6. 3rd from the end
@@ -308,6 +322,34 @@ Note You may be tempted to add a length property to your linked list class.
 The length property is not a typical property of linked list, 
 therefore don't make any modification to the linked list class that is provided to you.
 =========================================================*/
+
+function findThirdFromEnd(list) {
+  //current node at start
+  let currentNode = list.head;
+  console.log('currentNode is', currentNode);
+  //currentNode +1
+  let afterCurrentNode = list.head.next;
+  if (
+    //currentNode
+    currentNode &&
+    //currentNode+1
+    afterCurrentNode &&
+    //currentNode+2
+    //all don't equal null
+    afterCurrentNode.next !== null &&
+    //afterCurrentNode+3 is null
+    afterCurrentNode.next.next === null
+  ) {
+    //return currentNode
+    console.log('third from end is', currentNode);
+    return currentNode;
+  }
+  //current node goes up one
+  currentNode = currentNode.next;
+  console.log('next node up is', currentNode);
+  return findThirdFromEnd(list);
+}
+
 /* 
 =========================================================
 7. Middle of a list
